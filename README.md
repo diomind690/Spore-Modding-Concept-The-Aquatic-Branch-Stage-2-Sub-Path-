@@ -25,8 +25,8 @@ This project outlines a smart method to implement the cut Aquatic Stage by manip
 
 #### 🧬 2. The Anatomy-Based Choice
 The transition from the Cell Stage reads the player's choices in the editor:
-*   **The 3D Realization:** The cell looks around, realizes the world is 3D, and enters the editor.
-*   **Staying Underwater:** If the player adds gills and fins, the creature decides to stay below the fixed water line because it finds this world interesting. It utilizes modified wing levitation to swim and hover smoothly without falling.
+*   **The 3D Realization:** The cell looks around, realizes the world is 3D, and enters the protozoan editor.
+*   **Staying Underwater:** If the player adds gills and fins, the creature decides to stay below the fixed water line because it finds this world interesting. It utilizes modified wing levitation to swim and hover smoothly without falling (but within the sea level limit).
 *   **Going to Land:** If the player gives the creature legs, a standard nose, and a mouth, it attempts to stay but realizes it is suffocating under the fixed engine water line. It panics and runs/swims up to the surface, triggering the standard vanilla cutscene of crawling onto dry land.
 
 ---
@@ -40,12 +40,12 @@ The transition from the Cell Stage reads the player's choices in the editor:
 #### 1. Костыль с фиксированным уровнем моря
 *   **Суть идеи:** Физическая вода убирается, то есть визуально перед нами обычный сухой пляж и суша без воды.
 *   **Обман движка:** При этом уровень моря в коде помечается как неизменный и фиксированный. Игра технически продолжает думать, что ниже этой линии находится вода.
-*   **Окружение и кастомная фауна:** На этом сухом пляже стандартно генерируется ландшафт и гнёзда. Чтобы разнообразить мир, в файлах игры изменяются свойства некоторой флоры — их тег меняется с обычного `gaprop` на `underwater`. Это заставляет движок автоматически спавнить на «сухом дне» только специализированную морскую флору. Атмосфера океана дорабатывается кастомными эффектами (пузыри, фильтры света).
+*   **Окружение и флора:** Гнезда и ландшафт генерируются обычным образом на этом сухом пляже. Для разнообразия мира свойства определенных растений изменяются в игровых файлах — их тип меняется с `gaprop` на `underwater`. Это приводит к тому, что движок автоматически размещает специализированные растения в засушливой экосистеме. Для создания атмосферы добавлены пользовательские подводные визуальные эффекты (пузырьки, фильтры, освещение), также это работает с существами, игра должна автоматически ставить существам префикс `underwater`, если у них есть жабры и плавники, и нет ног (однако можно позже реализовать земноводных)
 
 #### 🧬 2. Выбор пути на основе редактора
 Переход из этапа «Клетка» завязан на логику и строение тела существа:
-*   **Осознание 3D:** Клетка плавает, оглядывается, понимает, что мир не ограничен двумя измерениями, и уходит в 3D (в редактор простейших).
-*   **Морской путь:** Если игрок добавляет существу жабры и плавники — оно решает остаться под водой, так как этот мир ему интересен. Плавание реализуется через переделанную левитацию крыльев: существо плавно парит в воздухе над сухим пляжем и не падает.
+*   **Осознание 3D:** Клетка плавает, оглядывается, понимает, что мир не ограничен двумя измерениями, и уходит в 3D, затем полсе катсцены в редактор простейших.
+*   **Морской путь:** Если игрок добавляет существу жабры и плавники — оно решает остаться под водой, так как этот мир ему интересен. Плавание реализуется через переделанную левитацию крыльев: существо плавно парит в воздухе над сухим пляжем и не падает (но в пределе уровня моря).
 *   **Сухопутный путь:** Если игрок даёт существу ноги, нормальный нос и рот — запускается сцена, где оно понимает, что задыхается под этой невидимой технической толщей воды. Существо паникует, выплывает на поверхность, где срабатывает стандартная бесшовная катсцена выхода на сушу.
 
 ---
