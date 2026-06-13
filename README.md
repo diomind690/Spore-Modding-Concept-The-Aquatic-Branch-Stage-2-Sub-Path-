@@ -20,8 +20,8 @@ This project outlines a smart method to implement the cut Aquatic Stage by manip
 
 #### 1. The Fixed Sea Level Trick
 *   **The Concept:** The actual, visible water level is turned off or set to a point where there is no physical water. On the screen, it looks like a normal beach and dry land.
-*   **The Illusion:** However, the engine flag for the sea level is set as fixed and unchanged. The game technically still thinks that everything below a certain height is "underwater."
-*   **Environment & Custom Fauna:** Nests and terrain generate normally on this dry beach. To populate the world, the properties of specific fauna are modified in the game files—changing their type from `gaprop` to `underwater`. This forces the engine to automatically spawn specialized marine life across the dry ecosystem. Custom underwater VFX (bubbles, filters, lighting) are added to complete the atmosphere.
+*   **The Illusion:** However, the engine flag for the sea level is set as fixed and unchanged. The game technically still thinks that everything below a certain height is underwater.
+*   **Environment and Flora** Nests and terrain are generated normally on this dry beach. To add variety to the world, the properties of certain plants are modified in the game files—their type is changed from 'gaprop' to 'underwater'. This causes the engine to automatically place specialized plants in the arid ecosystem. Custom underwater visual effects (bubbles, filters, lighting) have been added to create atmosphere. This also applies to creatures; the game should automatically prefix creatures with 'underwater' if they have gills and fins and no legs (though amphibians may be implemented later).
 
 #### 🧬 2. The Anatomy-Based Choice
 The transition from the Cell Stage reads the player's choices in the editor:
@@ -52,9 +52,12 @@ The transition from the Cell Stage reads the player's choices in the editor:
 
 ## 🛠️ Project Status / Статус проекта
 
-> ⚠️ **Status:** **Conceptual Framework / Technical Design Document (Design Doc)**
-> Я не являюсь программистом или 3D-моделлером. Это логический концепт и ТЗ. Если вы моддер (SporeModder FX, Spore API) и хотите реализовать эту идею — пишите!
+> ⚠️ **Project Status:** **Conceptual Framework / Technical Design Document (Design Doc)**
+> I am not a programmer or a 3D modeler. This is a logical concept and a technical specification sheet. If you are a *Spore* modder (experienced with SporeModder FX, Spore API, or C++ injection) and want to help realize this idea, feel free to reach out!
+
+> ⚠️ **Статус проекта:** **Концепт и техническое задание (дизайн-документ)**
+> Я не являюсь программистом или 3D-моделлером. Это логический концепт и ТЗ. Если вы моддер *Spore* (работаете со SporeModder FX, Spore API или инъекциями C++) и хотите помочь реализовать эту идею — пишите!
 
 ## 📬 Contacts / Контакты
 
-*   **Discord:** `ВАШ_ТЕГ_ДИСКОРДА`
+*   **Discord:** `heian.shrine`
