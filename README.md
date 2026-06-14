@@ -23,6 +23,16 @@ This project outlines a smart method to implement the cut Aquatic Stage by manip
 *   **The Illusion:** However, the engine flag for the sea level is set as fixed and unchanged. The game technically still thinks that everything below a certain height is underwater.
 *   **Environment and Flora** Nests and terrain are generated normally on this dry beach. To add variety to the world, the properties of certain plants are modified in the game files—their type is changed from 'gaprop' to 'underwater'. This causes the engine to automatically place specialized plants in the arid ecosystem. Custom underwater visual effects (bubbles, filters, lighting) have been added to create atmosphere. This also applies to creatures; the game should automatically prefix creatures with 'underwater' if they have gills and fins and no legs (though amphibians may be implemented later).
 
+### Primary Implementation Strategy: Physics Bypass (Method B)
+To ensure complete compatibility with Spore's vanilla landscape rendering and automatic shore coloring, the mod will NOT move or delete the physical water plane (`cOcean` / `cWaterModel`). 
+
+Instead, we will use Spore ModAPI (C++) to:
+1. **Hook the Physics Loop:** Intercept the `HasFloated` / `IsSwimming` checks for the player creature and the camera.
+2. **Force Ground Physics Below Sea Level:** Force the engine to return `false` for swimming checks, allowing the creature to ignore the water surface and walk directly onto the dry ocean bed.
+3. **Trigger Visual Filters:** Activate a custom full-screen screen shader (tint, fog, particles) and spawn underwater props (by changing flags to `underwater`) dynamically based on the creature's Z-coordinate (when $Z \leq Z_{water}$).
+4. **Activate 3D Swimming:** Utilize modified wing levitation physics to handle vertical movement (floating/diving) seamlessly within the visual water volume.
+
+
 #### 🧬 2. The Anatomy-Based Choice
 The transition from the Cell Stage reads the player's choices in the editor:
 *   **The 3D Realization:** The cell looks around, realizes the world is 3D, and enters the protozoan editor.
@@ -41,6 +51,15 @@ The transition from the Cell Stage reads the player's choices in the editor:
 *   **Суть идеи:** Физическая вода убирается, то есть визуально перед нами обычный сухой пляж и суша без воды.
 *   **Обман движка:** При этом уровень моря в коде помечается как неизменный и фиксированный. Игра технически продолжает думать, что ниже этой линии находится вода.
 *   **Окружение и флора:** Гнезда и ландшафт генерируются обычным образом на этом сухом пляже. Для разнообразия мира свойства определенных растений изменяются в игровых файлах — их тип меняется с `gaprop` на `underwater`. Это приводит к тому, что движок автоматически размещает специализированные растения в засушливой экосистеме. Для создания атмосферы добавлены пользовательские подводные визуальные эффекты (пузырьки, фильтры, освещение), также это работает с существами, игра должна автоматически ставить существам префикс `underwater`, если у них есть жабры и плавники, и нет ног (однако можно позже реализовать земноводных)
+
+### Основная стратегия реализации: Обход физики (Метод Б)
+Чтобы обеспечить полную совместимость с ванильным рендерингом ландшафта Spore и автоматическим окрашиванием берегов, мод НЕ будет перемещать или удалять физическую плоскость воды (`cOcean` / `cWaterModel`).
+
+Вместо этого мы используем Spore ModAPI (C++) для следующих задач:
+1. **Перехват физического цикла:** Перехват проверок функций `HasFloated` / `IsSwimming` для существа игрока и камеры.
+2. **Принудительная физика суши ниже уровня моря:** Заставить движок принудительно возвращать `false` для проверок плавания. Это позволит существу игнорировать поверхность воды и беспрепятственно проходить на сухое океанское дно.
+3. **Запуск визуальных фильтров:** Динамическое включение кастомного полноэкранного шейдера (туман, синий фильтр, частицы) и спавн подводных объектов (путем изменения их тегов на `underwater`) на основе координаты Z существа (когда $Z \leq Z_{water}$).
+4. **Активация 3D-плавания:** Использование модифицированной физики левитации крыльев для плавной реализации вертикального перемещения (всплытие/погружение) внутри визуального объема воды.
 
 #### 🧬 2. Выбор пути на основе редактора
 Переход из этапа «Клетка» завязан на логику и строение тела существа:
